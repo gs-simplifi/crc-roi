@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <!-- <script async src="https://www.googletagmanager.com/gtag/js?id=G-P02P9RJZ4E"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-P02P9RJZ4E');
+    </script> -->
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Response Centre - ROI Calculator" />
+    <meta name="keywords" content="Response Centre, ROI Calculator" />
+    <title>CRC - ROI Calculator</title>
+
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+
+</head>
+<body>
+    
+    <div class="container-fluid mw-100">
+
+        <!-- Main Div -->
+        <div class="main-container container-fluid row">
+            
+                <div class="col-m-6 left">                
+                    <h1>Canadian Response Centre - ROI Calculator</h1>
+                    <br>
+                    <h5>Understanding returns on your investment.</h5>
+                    <br><br>
+
+                    <a class="startHereButton" href="#calcID"> Start Calculations</a>
+
+                    
+                </div>
+
+        </div>
+        <div class="main-container row calculations container-fluid" id="calcID">     
+            <div class="col-m-6 right" class="btn-group btn-group-toggle" data-toggle="buttons">
+                <!-- Selecting the calculation type -->
+                <div class="row">
+                    <label class="col-6">Population on Site:  <em><b><span id="population"></span></b></em> (move the slider to change)</label>
+                    <div class="slidecontainer">
+                        <input type="range" min="5" max="5000" step="5" value="250" class="slider" id="myRange">
+                    </div>
+                </div>
+                
+                <div class="row calcSections" id="optionsCalc-div">
+                    <label class="col-sm-3">Select Type of Scenario</label>
+                    <div class="col-sm-4">
+                        <label class="btn button-background">
+                            <input type="radio" name="optionsCalc" value="intlsos" autocomplete="off"> International SOS Staff (under development)</label>
+                    </div>
+                    <div class="col-sm-4">
+                        <label class="btn button-background">
+                            <input type="radio" name="optionsCalc" value="noStaff" autocomplete="off"> No Medical Staff</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="main-container row calculations container-fluid displaynone" id="nostaffid">
+            
+            <div class="col-m-6 right" class="btn-group btn-group-toggle" data-toggle="buttons"> 
+                <em>Click the + sign to expand</em>
+                <div class="title_bar">Occupational Injury and Illness Case Management
+                    <div class="max_min_button">+</div>
+                </div>
+                <div class="content_body" style="display: none;">
+                    <h6>Inputs</h6>
+                    <div class="row level2">
+                        <label class="col-3">Annual Injuries:   <em><b><span id="annual-injury-display"></span></b></em></label>
+                        <div class="slidecontainer col-4">
+                            <input type="range" min="0" max="400" step="1" value="10" class="slider" id="annual-injury-slider">
+                        </div>
+                        <div class="col-4">
+                            Typically between 1% to 6% of total population.
+                        </div>                   
+                    </div>
+                    <div class="row level2">
+                        <label class="col-3">Cost to Case: ($s)</label>
+                            <input type="number" min="0" step="100" value="3500" class="col-4" id="injury-cost">
+                        <div class="col-4 info">
+                            Average: $4,500 &#x1F6C8
+                                <span class="tooltiptext">Includes direct case management costs and indirect costs such as unplanned downtimes, overtime costs, overheads, etc.</span>
+                            
+                        </div>
+                    </div>
+                    <h6>Assumptions</h6>
+                    <div class="row level2">
+                        <label class="col-3">% Cases Managed in-house </label>
+                        <div class="col-4">
+                            <em><b>66.67%</b></em>
+                        </div>
+                        <div class="col-4">
+                            Typically between 60% to 80% of total cases.
+                        </div>
+                    </div>
+                    <div class="row level2">
+                        <label class="col-3">Cost to Case of Intl.SOS managed case: ($s)</label>
+                        <div class="col-4">
+                            <em><b>15%</b> - $<span id="intlsos-case-cost"></span></em>
+                        </div>
+                        <div class="col-4">
+                            Typically between 5% to 25% of general case cost (if managed inhouse).
+                        </div>
+                    </div>
+                    <h6>ANNUAL SAVINGS in Injury and Occupational Illness case management</h6>
+                    <div class="row level2">
+                        <label class="col-3">DO NOTHING - Case Management Costs</label>
+                        <div class="col-4">
+                            <em>$ <span id="do-nothing-occinjury-cost"></span></em>
+                        </div>
+                        <div class="col-4">
+                            (# of Annual Injuries x Cost to Case)
+                        </div>
+                    </div>
+                    <div class="row level2">
+                        <label class="col-3">Intl.SOS after CRC - Case Management Costs</label>
+                        <div class="col-4">
+                            <em>$ <span id="crc-occinjury-cost"></span></em>
+                        </div>
+                        <div class="col-4">
+                            (% saved x Intl.SOS Cost to Case + % not Saved x Original Cost to Case)
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <h6><b>COST SAVINGS</b></h6>
+                        </div>
+                        <div class="col-4">
+                            <em><b>$ <span class="savings-occinjury"></span></b></em>
+                        </div>
+                        <div class="col-4">
+                            (DO NOTHING COSTS - after CRC COSTS)
+                        </div>
+                    </div>
+                </div>
+                <div class="title_bar">Primary Care Service
+                    <div class="max_min_button">+</div>
+                </div>
+                <div class="content_body" style="display: none;">
+                    <h6>Inputs</h6>
+                    <div class="row level2">
+                        <label class="col-3">% Population using Primary Care: <em><b><span id="pc-number-display"></span></b></em></label>
+                        <div class="slidecontainer col-4">
+                            <input type="range" min="0" max="500" step="5" value="75" class="slider" id="pc-number-slider">
+                        </div>
+                        <div class="col-4">
+                            Typically between 25% to 60% of total population. Typically each individual uses once a quarter.
+                        </div>
+                    </div>
+                    <div class="row level2">
+                        <label class="col-3">Cost to Case: ($s)</label>
+                        <input type="number" min="0" step="100" value="1000" class="col-4" id="pc-cost">
+                        <div class="col-4 info">
+                            Average: $1,500 &#x1F6C8
+                            <span class="tooltiptext">Includes leave management costs and indirect costs such as unplanned
+                                downtimes, overtime costs, overheads, etc.</span>
+                
+                        </div>
+                    </div>
+                    <h6>Assumptions</h6>
+                    <div class="row level2">
+                        <label class="col-3">% Cases Managed in-house </label>
+                        <div class="col-4">
+                            <em><b>50%</b></em>
+                        </div>
+                        <div class="col-4">
+                            Typically between 50% to 75% of total cases.
+                        </div>
+                    </div>
+                    <div class="row level2">
+                        <label class="col-3">Cost to Case of Intl.SOS managed case: ($s)</label>
+                        <div class="col-4">
+                            <em><b>25%</b> - $<span id="intlsos-pccase-cost"></span></em>
+                        </div>
+                        <div class="col-4">
+                            Typically between 15% to 30% of general case cost (if managed inhouse).
+                        </div>
+                    </div>
+                    <h6>ANNUAL SAVINGS in Primary Care Services</h6>
+                    <div class="row level2">
+                        <label class="col-3">DO NOTHING - Primary Care Management Costs</label>
+                        <div class="col-4">
+                            <em>$ <span id="do-nothing-pc-cost"></span></em>
+                        </div>
+                        <div class="col-4">
+                            (# of Annual Injuries x Cost to Case x 4 visits annually per individual)
+                        </div>
+                    </div>
+                    <div class="row level2">
+                        <label class="col-3">Intl.SOS after CRC - Case Management Costs</label>
+                        <div class="col-4">
+                            <em>$ <span id="crc-pc-cost"></span></em>
+                        </div>
+                        <div class="col-4">
+                            (% saved x Intl.SOS Cost to Case + % not Saved x Original Cost to Case) x 4 visits annually per individual
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <h6><b>COST SAVINGS</b></h6>
+                        </div>
+                        <div class="col-4">
+                            <em><b>$ <span class="savings-pc"></span></b></em>
+                        </div>
+                        <div class="col-4">
+                            (DO NOTHING COSTS - after CRC COSTS)
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="title_bar">TOTAL SAVINGS
+                </div>
+                <div class="row level2">
+                    <label class="col-3">Occupational Injury and Illness Case Management</label>
+                    <div class="col-4">
+                        <em>$ <span class="savings-occinjury"></span></em>
+                    </div>
+                </div>
+                <div class="row level2">
+                    <label class="col-3">Primary Care Services</label>
+                    <div class="col-4">
+                        <em>$ <span class="savings-pc"></span></em>
+                        <!-- Change class above -->
+                    </div>
+                </div>
+                <div class="row title_bar totals">
+                    <div class="col-4">
+                        TOTAL COST SAVINGS
+                    </div>
+                    <div class="col-4">
+                        <em><b>$ <span class="savings-nostaff-total"></span></b></em>
+                        <!-- change class above -->
+                    </div>
+                </div>
+                <div class="title_bar">Stress Test on Assumptions<span style="color:red;">(UNDER DEVELOPMENT)</span>
+                    <div class="max_min_button">+</div>
+                </div>
+                <div class="content_body" style="display: none;">
+                    <h6>COMING SOON</h6>
+                    <div class="row level2">
+                        <label class="col-3">COMING SOON: <em><b><span
+                                        id="pc-number-display"></span></b></em></label>
+                        <div class="slidecontainer col-4">
+                            <input type="range" min="0" max="500" step="5" value="75" class="slider" id="pc-number-slider">
+                        </div>
+                        <div class="col-4">
+COMING SOON                        </div>
+                    </div>
+                    <div class="row level2">
+                        <label class="col-3">Cost to Case: ($s)</label>
+                        <input type="number" min="0" step="100" value="1000" class="col-4" id="pc-cost">
+                        <div class="col-4 info">
+                            Average: $1,500 &#x1F6C8
+                            <span class="tooltiptext">Includes COMING SOON management costs and indirect costs such as unplanned
+                                downtimes, overtime costs, overheads, etc.</span>
+                
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="main-container row calculations container-fluid displaynone" id="intlsosid">
+            <div class="col-m-6 right" class="btn-group btn-group-toggle" data-toggle="buttons">
+                <em>Click the + sign to expand</em>
+                <div class="title_bar">Enhanced Medical Supervision<span style="color:red;">(UNDER DEVELOPMENT)</span>
+                    <div class="max_min_button">+</div>
+                </div>
+                <div class="content_body" style="display: none;">
+                    <h6>Inputs</h6>
+                    <div class="row level2">
+                        <label class="col-3">Annual Injuries: <em><b><span id="annual-injury-display"></span></b></em></label>
+                        <div class="slidecontainer col-4">
+                            <input type="range" min="0" max="400" step="1" value="10" class="slider" id="annual-injury-slider">
+                        </div>
+                        <div class="col-4">
+                            Typically between 1% to 6% of total population.
+                        </div>
+                    </div>
+                    <div class="row level2">
+                        <label class="col-3">Cost to Case: ($s)</label>
+                        <input type="number" min="0" step="100" value="3500" class="col-4" id="injury-cost">
+                        <div class="col-4 info">
+                            Average: $4,500 &#x1F6C8
+                            <span class="tooltiptext">Includes direct case management costs and indirect costs such as unplanned
+                                downtimes, overtime costs, overheads, etc.</span>
+                
+                        </div>
+                    </div>
+                    <h6>Assumptions</h6>
+                    <div class="row level2">
+                        <label class="col-3">% Cases Managed in-house </label>
+                        <div class="col-4">
+                            <em><b>66.67%</b></em>
+                        </div>
+                        <div class="col-4">
+                            Typically between 60% to 80% of total cases.
+                        </div>
+                    </div>
+                    <div class="row level2">
+                        <label class="col-3">Cost to Case of Intl.SOS managed case: ($s)</label>
+                        <div class="col-4">
+                            <em><b>15%</b> - $<span id="intlsos-case-cost"></span></em>
+                        </div>
+                        <div class="col-4">
+                            Typically between 5% to 25% of general case cost (if managed inhouse).
+                        </div>
+                    </div>
+                    <h6>ANNUAL SAVINGS in Injury and Occupational Illness case management</h6>
+                    <div class="row level2">
+                        <label class="col-3">DO NOTHING - Case Management Costs</label>
+                        <div class="col-4">
+                            <em>$ <span id="do-nothing-occinjury-cost"></span></em>
+                        </div>
+                        <div class="col-4">
+                            (# of Annual Injuries x Cost to Case)
+                        </div>
+                    </div>
+                    <div class="row level2">
+                        <label class="col-3">Intl.SOS after CRC - Case Management Costs</label>
+                        <div class="col-4">
+                            <em>$ <span id="crc-occinjury-cost"></span></em>
+                        </div>
+                        <div class="col-4">
+                            (% saved x Intl.SOS Cost to Case + % not Saved x Original Cost to Case)
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <h6><b>COST SAVINGS</b></h6>
+                        </div>
+                        <div class="col-4">
+                            <em><b>$ <span id="savings-occinjury"></span></b></em>
+                        </div>
+                        <div class="col-4">
+                            (DO NOTHING COSTS - after CRC COSTS)
+                        </div>
+                    </div>
+                </div>
+                <div class="title_bar">NP Night Coverage<span style="color:red;">(UNDER DEVELOPMENT)</span>
+                    <div class="max_min_button">+</div>
+                </div>
+                <div class="content_body" style="display: none;">
+                    <h6>Inputs</h6>
+                    <div class="row level2">
+                        <label class="col-3">Annual Injuries: <em><b><span id="annual-injury-display"></span></b></em></label>
+                        <div class="slidecontainer col-4">
+                            <input type="range" min="0" max="400" step="1" value="10" class="slider" id="annual-injury-slider">
+                        </div>
+                        <div class="col-4">
+                            Typically between 1% to 6% of total population.
+                        </div>
+                    </div>
+                    <div class="row level2">
+                        <label class="col-3">Cost to Case: ($s)</label>
+                        <input type="number" min="0" step="100" value="3500" class="col-4" id="injury-cost">
+                        <div class="col-4 info">
+                            Average: $4,500 &#x1F6C8
+                            <span class="tooltiptext">Includes direct case management costs and indirect costs such as unplanned
+                                downtimes, overtime costs, overheads, etc.</span>
+                
+                        </div>
+                    </div>
+                    <h6>Assumptions</h6>
+                    <div class="row level2">
+                        <label class="col-3">% Cases Managed in-house </label>
+                        <div class="col-4">
+                            <em><b>66.67%</b></em>
+                        </div>
+                        <div class="col-4">
+                            Typically between 60% to 80% of total cases.
+                        </div>
+                    </div>
+                    <div class="row level2">
+                        <label class="col-3">Cost to Case of Intl.SOS managed case: ($s)</label>
+                        <div class="col-4">
+                            <em><b>15%</b> - $<span id="intlsos-case-cost"></span></em>
+                        </div>
+                        <div class="col-4">
+                            Typically between 5% to 25% of general case cost (if managed inhouse).
+                        </div>
+                    </div>
+                    <h6>ANNUAL SAVINGS in Injury and Occupational Illness case management</h6>
+                    <div class="row level2">
+                        <label class="col-3">DO NOTHING - Case Management Costs</label>
+                        <div class="col-4">
+                            <em>$ <span id="do-nothing-occinjury-cost"></span></em>
+                        </div>
+                        <div class="col-4">
+                            (# of Annual Injuries x Cost to Case)
+                        </div>
+                    </div>
+                    <div class="row level2">
+                        <label class="col-3">Intl.SOS after CRC - Case Management Costs</label>
+                        <div class="col-4">
+                            <em>$ <span id="crc-occinjury-cost"></span></em>
+                        </div>
+                        <div class="col-4">
+                            (% saved x Intl.SOS Cost to Case + % not Saved x Original Cost to Case)
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <h6><b>COST SAVINGS</b></h6>
+                        </div>
+                        <div class="col-4">
+                            <em><b>$ <span id="savings-occinjury"></span></b></em>
+                        </div>
+                        <div class="col-4">
+                            (DO NOTHING COSTS - after CRC COSTS)
+                        </div>
+                    </div>
+                </div>
+                <div class="title_bar">Building Site Capabilities<span style="color:red;">(UNDER DEVELOPMENT)</span>
+                    <div class="max_min_button">+</div>
+                </div>
+                <div class="content_body" style="display: none;">
+                    <h6>Inputs</h6>
+                    <div class="row level2">
+                        <label class="col-3">Annual Injuries: <em><b><span id="annual-injury-display"></span></b></em></label>
+                        <div class="slidecontainer col-4">
+                            <input type="range" min="0" max="400" step="1" value="10" class="slider" id="annual-injury-slider">
+                        </div>
+                        <div class="col-4">
+                            Typically between 1% to 6% of total population.
+                        </div>
+                    </div>
+                    <div class="row level2">
+                        <label class="col-3">Cost to Case: ($s)</label>
+                        <input type="number" min="0" step="100" value="3500" class="col-4" id="injury-cost">
+                        <div class="col-4 info">
+                            Average: $4,500 &#x1F6C8
+                            <span class="tooltiptext">Includes direct case management costs and indirect costs such as unplanned
+                                downtimes, overtime costs, overheads, etc.</span>
+                
+                        </div>
+                    </div>
+                    <h6>Assumptions</h6>
+                    <div class="row level2">
+                        <label class="col-3">% Cases Managed in-house </label>
+                        <div class="col-4">
+                            <em><b>66.67%</b></em>
+                        </div>
+                        <div class="col-4">
+                            Typically between 60% to 80% of total cases.
+                        </div>
+                    </div>
+                    <div class="row level2">
+                        <label class="col-3">Cost to Case of Intl.SOS managed case: ($s)</label>
+                        <div class="col-4">
+                            <em><b>15%</b> - $<span id="intlsos-case-cost"></span></em>
+                        </div>
+                        <div class="col-4">
+                            Typically between 5% to 25% of general case cost (if managed inhouse).
+                        </div>
+                    </div>
+                    <h6>ANNUAL SAVINGS in Injury and Occupational Illness case management</h6>
+                    <div class="row level2">
+                        <label class="col-3">DO NOTHING - Case Management Costs</label>
+                        <div class="col-4">
+                            <em>$ <span id="do-nothing-occinjury-cost"></span></em>
+                        </div>
+                        <div class="col-4">
+                            (# of Annual Injuries x Cost to Case)
+                        </div>
+                    </div>
+                    <div class="row level2">
+                        <label class="col-3">Intl.SOS after CRC - Case Management Costs</label>
+                        <div class="col-4">
+                            <em>$ <span id="crc-occinjury-cost"></span></em>
+                        </div>
+                        <div class="col-4">
+                            (% saved x Intl.SOS Cost to Case + % not Saved x Original Cost to Case)
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <h6><b>COST SAVINGS</b></h6>
+                        </div>
+                        <div class="col-4">
+                            <em><b>$ <span id="savings-occinjury"></span></b></em>
+                        </div>
+                        <div class="col-4">
+                            (DO NOTHING COSTS - after CRC COSTS)
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Total div -->
+                <div class="title_bar">TOTAL SAVINGS
+                </div>
+                <div class="row level2">
+                    <label class="col-3">Enhanced Medical Supervision</label>
+                    <div class="col-4">
+                        <em>$ <span class="savings-occinjury"></span></em>
+                    </div>
+                </div>
+                <div class="row level2">
+                    <label class="col-3">NP Night Coverage</label>
+                    <div class="col-4">
+                        <em>$ <span class="savings-occinjury"></span></em>
+                        <!-- Change class above -->
+                    </div>
+                </div>
+                <div class="row level2">
+                    <label class="col-3">Building Site Capabilities</label>
+                    <div class="col-4">
+                        <em>$ <span class="savings-occinjury"></span></em>
+                        <!-- Change class above -->
+                    </div>
+                </div>
+                <div class="row title_bar">
+                    <div class="col-4">
+                        TOTAL COST SAVINGS
+                    </div>
+                    <div class="col-4">
+                        <em><b>$ <span class="savings-occinjury"></span></b></em>
+                        <!-- change class above -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <!--  -->
+        <!-- <h6>Assumptions</h6>
+        <div class="row level2">
+            <label class="col-3">% Cases Managed in-house </label>
+            <div class="col-4">
+                <em><b>66.67%</b></em>
+            </div>
+            <div class="col-4">
+                Typically between 60% to 80% of total cases.
+            </div>
+        </div>
+        <div class="row level2">
+            <label class="col-3">Cost to Case of Intl.SOS managed case: ($s)</label>
+            <div class="col-4">
+                <em><b>15%</b> - $<span id="intlsos-case-cost"></span></em>
+            </div>
+            <div class="col-4">
+                Typically between 5% to 25% of general case cost (if managed inhouse).
+            </div>
+        </div>
+        <h6>ANNUAL SAVINGS in Injury and Occupational Illness case management</h6>
+        <div class="row level2">
+            <label class="col-3">DO NOTHING - Case Management Costs</label>
+            <div class="col-4">
+                <em>$ <span id="do-nothing-occinjury-cost"></span></em>
+            </div>
+            <div class="col-4">
+                (# of Annual Injuries x Cost to Case)
+            </div>
+        </div>
+        <div class="row level2">
+            <label class="col-3">Intl.SOS after CRC - Case Management Costs</label>
+            <div class="col-4">
+                <em>$ <span id="crc-occinjury-cost"></span></em>
+            </div>
+            <div class="col-4">
+                (% saved x Intl.SOS Cost to Case + % not Saved x Original Cost to Case)
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4">
+                <h6><b>COST SAVINGS</b></h6>
+            </div>
+            <div class="col-4">
+                <em><b>$ <span id="savings-occinjury"></span></b></em>
+            </div>
+            <div class="col-4">
+                (DO NOTHING COSTS - after CRC COSTS)
+            </div>
+        </div>
+        <div class="row level2">
+            <label class="col-3">Intl.SOS after CRC - Case Management Costs</label>
+            <div class="col-4">
+                <em>$ <span id="crc-occinjury-cost"></span></em>
+            </div>
+            <div class="col-4">
+                (% saved x Intl.SOS Cost to Case + % not Saved x Original Cost to Case)
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4">
+                <h6><b>COST SAVINGS</b></h6>
+            </div>
+            <div class="col-4">
+                <em><b>$ <span id="savings-occinjury"></span></b></em>
+            </div>
+            <div class="col-4">
+                (DO NOTHING COSTS - after CRC COSTS)
+            </div>
+        </div> -->
+        <!--  -->
+        <!-- Results Section -->
+        <div class="main-container row hidden" id="resultsSection" style="display: none;">
+        
+            <div class="col-m-6 left endSection">
+                <h1>Your Results</h1>
+                <div id="resultsBox">
+                    
+                </div>
+            </div>
+
+
+
+            <div class="col-m-6 left endSection">
+                        <a class="startHereButton" href="contact.html"> Contact an expert</a>
+            </div>
+        
+        </div>
+
+        <!-- Footer -->
+        <div class="bottom-container">
+            <div class="row">
+                <div class="col-sm-4">
+                    <a class="footer-link" href="privacy.html" target="_blank">Privacy Notice</a>                    
+                </div>
+                <div class="col-sm-4">
+                    <a class="footer-link" href="disclaimer.html" target="_blank">Disclaimers</a>                    
+                </div>
+                <div class="col-sm-4">
+                    <a class="footer-link" href="cookie.html" target="_blank">Cookie Policy</a>                    
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <p>© 2022 GS-Simplifi Solutions</p>
+                </div>
+                <div class="col-sm-6">
+                    <p><em>gs.simplifi@gmail.com</em></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Script -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="js/client.js" type="text/JavaScript"></script>
+  <script src="js/server.js" type="text/JavaScript"></script>
+  <script src="js/serverFunction.js" type="text/JavaScript"></script>
+</body>
+</html>

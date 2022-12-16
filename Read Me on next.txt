@@ -1,0 +1,13 @@
+Do Primary care display and Calcs
+
+- then total savings of the case - adding both scenarios
+
+and then do all 3 cases of Intl. SOS Staff on site.
+
+- then total savings of the case - adding all 3 scenarios
+
+
+- then do cross checks with population.
+
+
+-- look at reducing the space between the button and box that opens.
